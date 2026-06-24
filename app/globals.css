@@ -1,26 +1,85 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark trading aesthetic — this is the only palette the app uses, so we
+     don't bother with a prefers-color-scheme light variant. */
+  --background: #0b0e11;
+  --panel: #14181d;
+  --border: #232830;
+  --foreground: #e8eaed;
+  --muted: #8b929c;
+  --accent: #16c784;
+  --accent-foreground: #04140d;
+  --danger: #ea3943;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-panel: var(--panel);
+  --color-border: var(--border);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Reusable surfaces */
+
+.cw-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.cw-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.cw-table th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cw-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cw-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Semantic text colors */
+
+.cw-text-muted {
+  color: var(--muted);
+}
+
+.cw-text-up {
+  color: var(--accent);
+}
+
+.cw-text-down {
+  color: var(--danger);
+}
+
+/* Monospace numeric utility — for prices, balances, percentages */
+
+.cw-num {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
 }
