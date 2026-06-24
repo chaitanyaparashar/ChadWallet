@@ -3,3 +3,21 @@ node_modules/
 .env
 .env.local
 .DS_Store
+
+# build artifacts
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts
+
+# testing
+/coverage
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# vercel
+.vercel
