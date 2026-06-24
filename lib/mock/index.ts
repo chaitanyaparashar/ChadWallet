@@ -1,6 +1,13 @@
 import type { Candle, Holder, Position, Token, TokenOverview, Trade } from "@/types";
 import { BASE_TOKENS } from "./tokens";
 
+/**
+ * Fixed time anchor (seconds). Using a constant instead of Date.now() keeps all
+ * mock output deterministic purely as a function of (mint, index) — no wall-clock
+ * dependence, so repeated calls for the same mint are byte-identical.
+ */
+const ANCHOR_SECONDS = 1_700_000_000;
+
 /** Hash a string seed into a 32-bit integer. */
 function hashSeed(seed: string): number {
   let h = 1779033703 ^ seed.length;
@@ -57,8 +64,7 @@ export function mockCandles(mint: string, count = 100): Candle[] {
   const base = baseTokenFor(mint);
   const rand = seeded(`candles:${mint}`);
   const hourSeconds = 3600;
-  const nowSeconds = Math.floor(Date.now() / 1000);
-  const startTime = nowSeconds - (count - 1) * hourSeconds;
+  const startTime = ANCHOR_SECONDS - (count - 1) * hourSeconds;
 
   const candles: Candle[] = [];
   let price = base.priceUsd;
@@ -113,12 +119,11 @@ export function mockHolders(mint: string): Holder[] {
 export function mockTrades(mint: string, count = 30): Trade[] {
   const base = baseTokenFor(mint);
   const rand = seeded(`trades:${mint}`);
-  const nowSeconds = Math.floor(Date.now() / 1000);
   const hourSeconds = 3600;
 
   const trades: Trade[] = [];
   for (let i = 0; i < count; i++) {
-    const timestamp = nowSeconds - Math.floor(rand() * hourSeconds);
+    const timestamp = ANCHOR_SECONDS - Math.floor(rand() * hourSeconds);
     const side: Trade["side"] = rand() > 0.5 ? "buy" : "sell";
     const priceUsd = base.priceUsd * (1 + (rand() * 2 - 1) * 0.03);
     const amountUsd = 10 + rand() * 5000;
