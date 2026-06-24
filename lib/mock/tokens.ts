@@ -1,0 +1,68 @@
+import type { Token } from "@/types";
+
+export const BASE_TOKENS: Token[] = [
+  {
+    mint: "So11111111111111111111111111111111111111112",
+    symbol: "SOL",
+    name: "Solana",
+    priceUsd: 142.35,
+    change24h: 3.2,
+    logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+  },
+  {
+    mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+    symbol: "BONK",
+    name: "Bonk",
+    priceUsd: 0.0000234,
+    change24h: -5.1,
+    logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263/logo.png",
+  },
+  {
+    mint: "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
+    symbol: "WIF",
+    name: "dogwifhat",
+    priceUsd: 2.18,
+    change24h: 7.6,
+    logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm/logo.png",
+  },
+  {
+    mint: "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+    symbol: "JUP",
+    name: "Jupiter",
+    priceUsd: 0.85,
+    change24h: 1.4,
+    logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN/logo.png",
+  },
+  {
+    mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    symbol: "USDC",
+    name: "USD Coin",
+    priceUsd: 1.0,
+    change24h: 0.01,
+    logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+  },
+  {
+    mint: "HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3",
+    symbol: "PYTH",
+    name: "Pyth Network",
+    priceUsd: 0.42,
+    change24h: -2.3,
+    logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3/logo.png",
+  },
+  {
+    mint: "jtojtomepa8beP8AuQc6eXt5FriJwfFMwQx2v2f9mCL",
+    symbol: "JTO",
+    name: "Jito",
+    priceUsd: 3.65,
+    change24h: 4.8,
+    logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/jtojtomepa8beP8AuQc6eXt5FriJwfFMwQx2v2f9mCL/logo.png",
+  },
+  {
+    mint: "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
+    symbol: "RAY",
+    name: "Raydium",
+    priceUsd: 5.92,
+    change24h: -1.7,
+    logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R/logo.png",
+  },
+];
