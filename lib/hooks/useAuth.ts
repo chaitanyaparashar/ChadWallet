@@ -24,7 +24,7 @@ function useRealAuth(): AuthState {
     ready,
     authenticated,
     solanaAddress: wallets[0]?.address,
-    login: () => login(),
+    login: (options) => login(options),
     logout: () => {
       void logout();
     },
