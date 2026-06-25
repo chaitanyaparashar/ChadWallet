@@ -3,6 +3,8 @@
 import { useParams } from "next/navigation";
 import { TrendingList } from "@/components/TrendingList";
 import { TokenHeader } from "@/components/TokenHeader";
+import { PriceChart } from "@/components/PriceChart";
+import { TradeTabs } from "@/components/TradeTabs";
 import { DemoDataPill } from "@/components/DemoDataPill";
 import { useTrending } from "@/lib/hooks/useTrending";
 import { useToken } from "@/lib/hooks/useToken";
@@ -10,7 +12,7 @@ import { useToken } from "@/lib/hooks/useToken";
 export default function TradePage() {
   const { mint } = useParams<{ mint: string }>();
   const { tokens, degraded: trendingDegraded } = useTrending();
-  const { overview, degraded: tokenDegraded, loading } = useToken(mint);
+  const { overview, candles, holders, trades, degraded: tokenDegraded, loading } = useToken(mint);
 
   const degraded = trendingDegraded || tokenDegraded;
 
@@ -24,11 +26,8 @@ export default function TradePage() {
         <div className="flex flex-col gap-4">
           <TokenHeader overview={overview} loading={loading} />
 
-          {/* TASK 12 PLACEHOLDER: replace with chart + holders/trades tabs */}
-          <div className="cw-card flex flex-1 min-h-[420px] flex-col items-center justify-center gap-2 p-4 text-sm cw-text-muted">
-            <p>Chart coming soon</p>
-            <p className="text-xs">(Task 12: price chart + holders/trades tabs)</p>
-          </div>
+          <PriceChart candles={candles} />
+          <TradeTabs holders={holders} trades={trades} />
         </div>
 
         {/* RIGHT: trade panel + position (Task 13 slots in here) */}
