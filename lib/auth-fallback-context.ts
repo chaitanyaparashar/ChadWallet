@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 /** Login providers ChadWallet offers as distinct entry points. */
-export type LoginMethod = "google" | "apple";
+export type LoginMethod = "google";
 
 /** Options forwarded to Privy's `login()` in real mode (ignored in placeholder mode). */
 export type LoginOptions = {

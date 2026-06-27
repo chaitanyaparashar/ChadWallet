@@ -8,7 +8,7 @@ function truncateAddress(address: string): string {
 }
 
 /**
- * Sign-in / account button. Shows Apple + Google login options when signed out,
+ * Sign-in / account button. Shows the Google login option when signed out,
  * or the truncated Solana wallet address + a disconnect action when signed in.
  */
 export function PrivyAuthButton() {
@@ -16,20 +16,20 @@ export function PrivyAuthButton() {
 
   if (!ready) {
     return (
-      <div className="h-10 w-32 animate-pulse rounded-full bg-zinc-800" />
+      <div className="h-10 w-32 animate-pulse rounded-full bg-panel" />
     );
   }
 
   if (authenticated) {
     return (
-      <div className="flex items-center gap-3 rounded-full border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm text-zinc-100">
+      <div className="flex items-center gap-3 rounded-full border border-border bg-panel px-4 py-2 text-sm text-foreground">
         <span className="font-mono">
           {solanaAddress ? truncateAddress(solanaAddress) : "Connected"}
         </span>
         <button
           type="button"
           onClick={logout}
-          className="text-zinc-400 transition-colors hover:text-zinc-100"
+          className="cw-text-muted transition-colors hover:text-foreground"
         >
           Disconnect
         </button>
@@ -38,21 +38,12 @@ export function PrivyAuthButton() {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <button
-        type="button"
-        onClick={() => login({ loginMethods: ["apple"] })}
-        className="rounded-full border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
-      >
-        Continue with Apple
-      </button>
-      <button
-        type="button"
-        onClick={() => login({ loginMethods: ["google"] })}
-        className="rounded-full border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
-      >
-        Continue with Google
-      </button>
-    </div>
+    <button
+      type="button"
+      onClick={() => login({ loginMethods: ["google"] })}
+      className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90"
+    >
+      Continue with Google
+    </button>
   );
 }

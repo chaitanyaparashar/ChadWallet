@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ChadWallet — Trade Solana memecoins like a Chad",
   description:
-    "ChadWallet is the fastest way onto Solana. Sign in with Apple or Google, skip the seed phrase, and trade any token instantly.",
+    "ChadWallet is the fastest way onto Solana. Sign in with Google, skip the seed phrase, and trade any token instantly.",
 };
 
 export default function RootLayout({

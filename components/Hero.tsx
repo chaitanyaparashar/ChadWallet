@@ -29,9 +29,9 @@ export function Hero() {
         </h1>
 
         <p className="max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
-          ChadWallet is the fastest way onto Solana. Sign in with Apple or
-          Google, skip the seed phrase, and start trading any token in
-          seconds — with live prices, real charts, and zero gatekeeping.
+          ChadWallet is the fastest way onto Solana. Sign in with Google,
+          skip the seed phrase, and start trading any token in seconds —
+          with live prices, real charts, and zero gatekeeping.
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">

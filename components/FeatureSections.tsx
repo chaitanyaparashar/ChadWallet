@@ -9,7 +9,7 @@ const FEATURES: Feature[] = [
     glyph: "01",
     title: "No seed phrases, ever",
     description:
-      "Sign in with Apple or Google and get a self-custodial embedded wallet instantly. No 12 words to lose, no browser extension to install.",
+      "Sign in with Google and get a self-custodial embedded wallet instantly. No 12 words to lose, no browser extension to install.",
   },
   {
     glyph: "02",

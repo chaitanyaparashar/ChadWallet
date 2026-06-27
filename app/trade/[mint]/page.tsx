@@ -5,6 +5,8 @@ import { TrendingList } from "@/components/TrendingList";
 import { TokenHeader } from "@/components/TokenHeader";
 import { PriceChart } from "@/components/PriceChart";
 import { TradeTabs } from "@/components/TradeTabs";
+import { TradePanel } from "@/components/TradePanel";
+import { PositionCard } from "@/components/PositionCard";
 import { DemoDataPill } from "@/components/DemoDataPill";
 import { useTrending } from "@/lib/hooks/useTrending";
 import { useToken } from "@/lib/hooks/useToken";
@@ -30,10 +32,10 @@ export default function TradePage() {
           <TradeTabs holders={holders} trades={trades} />
         </div>
 
-        {/* RIGHT: trade panel + position (Task 13 slots in here) */}
-        <div data-testid="trade-panel" className="cw-card flex flex-col gap-2 p-4 text-sm cw-text-muted">
-          <p>Trade panel</p>
-          <p className="text-xs">(Task 13: buy/sell panel + position)</p>
+        {/* RIGHT: trade panel + position */}
+        <div className="flex flex-col gap-4">
+          <TradePanel mint={mint} overview={overview} />
+          <PositionCard mint={mint} priceUsd={overview?.priceUsd ?? 0} />
         </div>
       </div>
 
