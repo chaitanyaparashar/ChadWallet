@@ -41,7 +41,7 @@ export function PrivyAuthButton() {
     <button
       type="button"
       onClick={() => login({ loginMethods: ["google"] })}
-      className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90"
+      className="rounded-full border border-border bg-panel px-5 py-2 text-sm font-medium text-foreground transition-colors hover:bg-border"
     >
       Continue with Google
     </button>

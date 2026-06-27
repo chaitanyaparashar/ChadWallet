@@ -165,7 +165,14 @@ export async function getOhlcv(mint: string, interval = "1H"): Promise<DataResul
     return { data: mockCandles(mint), degraded: true };
   }
   try {
-    const json = await fetchJson(`/defi/ohlcv?address=${mint}&type=${interval}`, key!);
+    // BirdEye's ohlcv endpoint requires an explicit time window. Pull the
+    // last ~7 days of 1H candles (168) so the chart has real history.
+    const timeTo = Math.floor(Date.now() / 1000);
+    const timeFrom = timeTo - 7 * 24 * 60 * 60;
+    const json = await fetchJson(
+      `/defi/ohlcv?address=${mint}&type=${interval}&time_from=${timeFrom}&time_to=${timeTo}`,
+      key!
+    );
     return { data: normalizeOhlcv(json), degraded: false };
   } catch {
     return { data: mockCandles(mint), degraded: true };

@@ -1,12 +1,19 @@
+import Link from "next/link";
 import { PrivyAuthButton } from "@/components/PrivyAuthButton";
 import { StoreButtons } from "@/components/StoreButtons";
+
+const DEFAULT_MINT = "So11111111111111111111111111111111111111112";
 
 /**
  * Top-of-page statement: brand, headline, CTAs. Designed to read as the
  * single most confident thing on the page — large type, one accent color,
  * minimal chrome.
+ *
+ * `launchMint` is the token the "Launch app" CTA opens in the trading view —
+ * the landing page passes the top trending token; falls back to SOL.
  */
-export function Hero() {
+export function Hero({ launchMint }: { launchMint?: string }) {
+  const launchHref = `/trade/${launchMint ?? DEFAULT_MINT}`;
   return (
     <section className="relative isolate overflow-hidden px-6 py-20 sm:py-28 lg:px-12">
       {/* Ambient glow — kept subtle, not a full hero image since we have none. */}
@@ -35,6 +42,12 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <Link
+            href={launchHref}
+            className="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-accent-foreground transition-opacity hover:opacity-90"
+          >
+            Launch app →
+          </Link>
           <PrivyAuthButton />
           <StoreButtons />
         </div>

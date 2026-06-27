@@ -14,7 +14,7 @@ export default function Home() {
     <div className="flex flex-1 flex-col">
       <TokenBanner tokens={tokens} direction="left" />
       <main className="flex-1">
-        <Hero />
+        <Hero launchMint={tokens[0]?.mint} />
         <FeatureSections />
       </main>
       <TokenBanner tokens={tokens} direction="right" />

@@ -70,7 +70,7 @@ export async function getQuote(
     return { data: mockQuote(inputMint, outputMint, amount, slippageBps), degraded: true };
   }
   try {
-    const url = `${baseUrl}/v6/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${Math.trunc(
+    const url = `${baseUrl}/swap/v1/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${Math.trunc(
       amount
     )}&slippageBps=${slippageBps}`;
     const res = await fetch(url);
@@ -94,7 +94,7 @@ export async function buildSwap(
     return { data: mockSwap, degraded: true };
   }
   try {
-    const res = await fetch(`${baseUrl}/v6/swap`, {
+    const res = await fetch(`${baseUrl}/swap/v1/swap`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ quoteResponse: quoteRaw, userPublicKey }),

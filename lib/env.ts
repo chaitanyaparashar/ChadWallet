@@ -6,7 +6,7 @@ export const serverEnv = {
   birdeyeKey: process.env.BIRDEYE_API_KEY,
   alchemyRpcUrl: process.env.ALCHEMY_SOLANA_RPC_URL,
   privySecret: process.env.PRIVY_APP_SECRET,
-  jupiterBaseUrl: process.env.JUPITER_BASE_URL || "https://quote-api.jup.ag",
+  jupiterBaseUrl: process.env.JUPITER_BASE_URL || "https://lite-api.jup.ag",
 };
 
 export const publicEnv = {
