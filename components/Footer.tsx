@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { StoreButtons } from "@/components/StoreButtons";
 
 /**
@@ -13,8 +14,17 @@ export function Footer() {
       <div className="mx-auto flex max-w-5xl flex-col gap-8">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex flex-col gap-2">
-            <span className="text-xl font-bold tracking-tight text-foreground">
-              Chad<span className="text-accent">Wallet</span>
+            <span className="flex items-center gap-2">
+              <Image
+                src="/logo/chad.png"
+                alt="ChadWallet logo"
+                width={28}
+                height={28}
+                style={{ width: 28, height: 28 }}
+              />
+              <span className="text-xl font-bold tracking-tight text-foreground">
+                Chad<span className="text-accent">Wallet</span>
+              </span>
             </span>
             <p className="max-w-xs text-sm text-muted">
               The fastest way to trade Solana memecoins. Self-custodial.

@@ -10,6 +10,8 @@ import { PositionCard } from "@/components/PositionCard";
 import { DemoDataPill } from "@/components/DemoDataPill";
 import { useTrending } from "@/lib/hooks/useTrending";
 import { useToken } from "@/lib/hooks/useToken";
+import { BrandMark } from "@/components/BrandMark";
+import { PrivyAuthButton } from "@/components/PrivyAuthButton";
 
 export default function TradePage() {
   const { mint } = useParams<{ mint: string }>();
@@ -20,6 +22,11 @@ export default function TradePage() {
 
   return (
     <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-4 p-4">
+      <header className="flex items-center justify-between border-b border-border pb-3">
+        <BrandMark size={32} href="/" />
+        <PrivyAuthButton />
+      </header>
+
       <div className="grid flex-1 grid-cols-1 gap-4 lg:grid-cols-[260px_1fr_320px]">
         {/* LEFT: trending rail */}
         <TrendingList tokens={tokens} activeMint={mint} />

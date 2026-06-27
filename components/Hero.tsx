@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PrivyAuthButton } from "@/components/PrivyAuthButton";
 import { StoreButtons } from "@/components/StoreButtons";
+import { BrandMark } from "@/components/BrandMark";
 
 const DEFAULT_MINT = "So11111111111111111111111111111111111111112";
 
@@ -23,6 +24,8 @@ export function Hero({ launchMint }: { launchMint?: string }) {
       />
 
       <div className="mx-auto flex max-w-5xl flex-col items-start gap-8">
+        <BrandMark size={44} />
+
         <span className="cw-num rounded-full border border-border bg-panel px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent">
           Built on Solana
         </span>
