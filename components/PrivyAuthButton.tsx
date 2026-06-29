@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/lib/hooks/useAuth";
+import { GoogleIcon } from "@/components/Icons";
 
 function truncateAddress(address: string): string {
   if (address.length <= 8) return address;
@@ -22,7 +23,7 @@ export function PrivyAuthButton() {
 
   if (authenticated) {
     return (
-      <div className="flex items-center gap-3 rounded-full border border-border bg-panel px-4 py-2 text-sm text-foreground">
+      <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 text-sm text-foreground backdrop-blur-md">
         <span className="font-mono">
           {solanaAddress ? truncateAddress(solanaAddress) : "Connected"}
         </span>
@@ -41,8 +42,11 @@ export function PrivyAuthButton() {
     <button
       type="button"
       onClick={() => login({ loginMethods: ["google"] })}
-      className="rounded-full border border-border bg-panel px-5 py-2 text-sm font-medium text-foreground transition-colors hover:bg-border"
+      className="cw-hover-icon inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.07] px-5 py-2 text-sm font-medium text-foreground backdrop-blur-md transition-colors hover:bg-white/[0.16]"
     >
+      <span className="cw-btn-icon">
+        <GoogleIcon />
+      </span>
       Continue with Google
     </button>
   );

@@ -78,7 +78,7 @@ export default function TradePage() {
           <TokenHeader overview={overview} loading={loading} />
           <StatPills overview={overview} holdersCount={holders.length} />
 
-          <div className="cw-card overflow-hidden">
+          <div className="cw-card shrink-0 overflow-hidden">
             <ChartToolbar symbol={symbol} candles={candles} />
             <PriceChart candles={candles} />
             <div className="flex items-center justify-between border-t border-border px-3 py-2 text-xs">

@@ -44,6 +44,12 @@ export function PrivyProviderWrapper({ children }: { children: ReactNode }) {
       appId={publicEnv.privyAppId!}
       config={{
         loginMethods: ["google"],
+        appearance: {
+          theme: "dark",
+          accentColor: "#16c784",
+          logo: "/logo/chad.png",
+          walletChainType: "solana-only",
+        },
         embeddedWallets: {
           solana: {
             createOnLogin: "users-without-wallets",

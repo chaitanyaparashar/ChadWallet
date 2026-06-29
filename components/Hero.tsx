@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRightIcon, DownloadIcon } from "@/components/Icons";
 
 const DEFAULT_MINT = "So11111111111111111111111111111111111111112";
 const GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=xyz.chadwallet.www";
@@ -44,6 +45,9 @@ export function Hero({ launchMint }: { launchMint?: string }) {
       <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
         <Link href={launchHref} className="cw-btn cw-btn-primary">
           Start trading
+          <span className="cw-btn-icon">
+            <ArrowRightIcon />
+          </span>
         </Link>
         <a
           href={GOOGLE_PLAY_URL}
@@ -52,6 +56,9 @@ export function Hero({ launchMint }: { launchMint?: string }) {
           className="cw-btn cw-btn-secondary"
         >
           Download app
+          <span className="cw-btn-icon">
+            <DownloadIcon />
+          </span>
         </a>
       </div>
 

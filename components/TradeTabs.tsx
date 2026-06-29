@@ -15,7 +15,7 @@ export function TradeTabs({ holders, trades }: { holders: Holder[]; trades: Trad
   const [activeTab, setActiveTab] = useState<Tab>("holders");
 
   return (
-    <div className="cw-card flex flex-1 flex-col overflow-hidden">
+    <div className="cw-card flex shrink-0 flex-col overflow-hidden">
       <div className="flex border-b border-border">
         <button
           type="button"
@@ -43,7 +43,7 @@ export function TradeTabs({ holders, trades }: { holders: Holder[]; trades: Trad
         </button>
       </div>
 
-      <div className="flex-1 overflow-auto">
+      <div className="overflow-x-auto">
         {activeTab === "holders" ? (
           <HoldersTable holders={holders} />
         ) : (

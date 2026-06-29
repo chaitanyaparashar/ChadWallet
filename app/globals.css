@@ -138,33 +138,55 @@ body {
   text-transform: lowercase;
 }
 
-/* CTA buttons */
+/* CTA buttons — frosted glass, with an icon that reveals on hover (fomo style) */
 .cw-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   border-radius: 0.75rem;
   padding: 0.85rem 1.6rem;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .cw-btn:hover {
   transform: translateY(-1px);
 }
 .cw-btn-primary {
-  background: var(--accent);
+  background: color-mix(in srgb, var(--accent) 88%, transparent);
   color: var(--accent-foreground);
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, white 10%);
+  backdrop-filter: blur(12px);
   box-shadow: 0 8px 30px -8px color-mix(in srgb, var(--accent) 60%, transparent);
 }
+.cw-btn-primary:hover {
+  background: var(--accent);
+}
 .cw-btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--foreground);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
 }
 .cw-btn-secondary:hover {
   background: rgba(255, 255, 255, 0.16);
+}
+
+/* Icon that slides in next to a button's label on hover. */
+.cw-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.25s ease, opacity 0.2s ease, margin 0.25s ease;
+}
+.cw-btn:hover .cw-btn-icon,
+.cw-hover-icon:hover .cw-btn-icon {
+  max-width: 1.4rem;
+  opacity: 1;
 }
 
 /* Animated starfield: three layered, drifting star fields built from radial
