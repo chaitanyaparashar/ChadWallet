@@ -37,7 +37,7 @@ export function HoldersTable({ holders }: { holders: Holder[] }) {
       </thead>
       <tbody>
         {holders.map((holder, index) => (
-          <tr key={holder.owner}>
+          <tr key={`${holder.owner}-${index}`}>
             <td className="cw-num text-muted">{index + 1}</td>
             <td className="cw-num text-foreground">{truncateAddress(holder.owner)}</td>
             <td className="cw-num text-foreground">{formatAmount(holder.amount)}</td>

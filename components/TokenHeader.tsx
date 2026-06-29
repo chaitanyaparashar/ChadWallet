@@ -1,37 +1,24 @@
+"use client";
+
+import { useState } from "react";
 import type { TokenOverview } from "@/types";
+import { truncateAddress } from "@/lib/format";
 
-function formatPrice(priceUsd: number): string {
-  if (priceUsd >= 1) {
-    return `$${priceUsd.toFixed(2)}`;
+function TokenLogo({ overview }: { overview: TokenOverview }) {
+  if (overview.logoURI) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={overview.logoURI} alt="" className="h-9 w-9 rounded-full bg-border object-cover" />;
   }
-  // Sub-dollar tokens need more precision to be meaningful.
-  return `$${priceUsd.toFixed(6)}`;
-}
-
-function formatChange(change24h: number): string {
-  const sign = change24h >= 0 ? "+" : "";
-  return `${sign}${change24h.toFixed(2)}%`;
-}
-
-function formatCompact(value: number): string {
-  return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(
-    value
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col">
-      <span className="text-xs cw-text-muted">{label}</span>
-      <span className="cw-num text-sm text-foreground">{value}</span>
-    </div>
+    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-border text-sm font-semibold text-foreground">
+      {overview.symbol.slice(0, 1)}
+    </span>
   );
 }
 
 /**
- * Trade-page header: symbol/name, price, 24h change, market cap, and
- * volume for the active token. Renders a skeleton while loading and "—"
- * placeholders once loaded with no overview (e.g. unknown mint).
+ * Compact fomo-style token identity row: logo, symbol/name, copyable mint
+ * address, and social glyphs. Numeric stats live in the StatPills strip.
  */
 export function TokenHeader({
   overview,
@@ -40,54 +27,64 @@ export function TokenHeader({
   overview: TokenOverview | null;
   loading?: boolean;
 }) {
+  const [copied, setCopied] = useState(false);
+
   if (loading && !overview) {
     return (
-      <div className="cw-card flex items-center gap-4 p-4">
-        <div className="h-10 w-10 flex-none animate-pulse rounded-full bg-border" />
-        <div className="flex flex-1 flex-col gap-2">
-          <div className="h-4 w-32 animate-pulse rounded bg-border" />
-          <div className="h-3 w-48 animate-pulse rounded bg-border" />
-        </div>
+      <div className="flex items-center gap-3">
+        <div className="h-9 w-9 animate-pulse rounded-full bg-border" />
+        <div className="h-4 w-40 animate-pulse rounded bg-border" />
       </div>
     );
   }
-
   if (!overview) {
-    return (
-      <div className="cw-card flex items-center justify-between p-4">
-        <span className="text-sm cw-text-muted">Token not found</span>
-        <span className="cw-num text-sm cw-text-muted">—</span>
-      </div>
-    );
+    return <span className="text-sm cw-text-muted">Token not found</span>;
   }
 
-  const isUp = overview.change24h >= 0;
+  function copy() {
+    navigator.clipboard?.writeText(overview!.mint);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  }
 
   return (
-    <div className="cw-card flex flex-wrap items-center justify-between gap-4 p-4">
-      <div className="flex items-center gap-3">
-        <span
-          aria-hidden="true"
-          className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-border text-sm font-semibold text-foreground"
+    <div className="flex flex-wrap items-center gap-3">
+      <TokenLogo overview={overview} />
+      <div className="flex flex-col">
+        <span className="text-base font-semibold leading-tight text-foreground">{overview.symbol}</span>
+        <span className="text-xs cw-text-muted">{overview.name}</span>
+      </div>
+
+      <button
+        type="button"
+        onClick={copy}
+        className="cw-num flex items-center gap-1.5 rounded-md border border-border bg-panel px-2 py-1 text-xs cw-text-muted transition-colors hover:text-foreground"
+        title="Copy mint address"
+      >
+        {truncateAddress(overview.mint)}
+        <span className="text-[10px]">{copied ? "✓" : "⧉"}</span>
+      </button>
+
+      <div className="flex items-center gap-1.5 text-sm cw-text-muted">
+        <a
+          href={`https://x.com/search?q=${overview.symbol}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-panel hover:text-foreground"
         >
-          {overview.symbol.slice(0, 1)}
+          𝕏
+        </a>
+        <a
+          href={`https://solscan.io/token/${overview.mint}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-panel hover:text-foreground"
+        >
+          ⌕
+        </a>
+        <span className="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-panel">
+          ☆
         </span>
-        <div className="flex flex-col">
-          <span className="text-base font-semibold text-foreground">{overview.symbol}</span>
-          <span className="text-xs cw-text-muted">{overview.name}</span>
-        </div>
-      </div>
-
-      <div className="flex flex-col items-end">
-        <span className="cw-num text-lg text-foreground">{formatPrice(overview.priceUsd)}</span>
-        <span className={`cw-num text-sm ${isUp ? "cw-text-up" : "cw-text-down"}`}>
-          {formatChange(overview.change24h)}
-        </span>
-      </div>
-
-      <div className="flex gap-6">
-        <Stat label="Market Cap" value={`$${formatCompact(overview.marketCap)}`} />
-        <Stat label="24h Volume" value={`$${formatCompact(overview.volume24h)}`} />
       </div>
     </div>
   );

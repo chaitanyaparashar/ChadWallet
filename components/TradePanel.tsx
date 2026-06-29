@@ -181,14 +181,16 @@ export function TradePanel({ mint, overview }: { mint: string; overview: TokenOv
   const symbol = overview?.symbol ?? "TOKEN";
 
   return (
-    <div data-testid="trade-panel" className="cw-card flex flex-col gap-4 p-4 text-sm">
-      <div className="flex rounded-lg border border-border p-1">
+    <div data-testid="trade-panel" className="cw-card flex flex-col gap-3 p-4 text-sm">
+      <div className="grid grid-cols-2 gap-2">
         <button
           type="button"
           data-testid="trade-side-buy"
           onClick={() => setSide("buy")}
-          className={`flex-1 rounded-md py-1.5 text-sm font-medium transition-colors ${
-            side === "buy" ? "bg-accent text-accent-foreground" : "cw-text-muted hover:text-foreground"
+          className={`rounded-lg py-2.5 text-base font-semibold transition-colors ${
+            side === "buy"
+              ? "bg-accent text-accent-foreground"
+              : "bg-panel cw-text-muted hover:text-foreground"
           }`}
         >
           Buy
@@ -197,18 +199,18 @@ export function TradePanel({ mint, overview }: { mint: string; overview: TokenOv
           type="button"
           data-testid="trade-side-sell"
           onClick={() => setSide("sell")}
-          className={`flex-1 rounded-md py-1.5 text-sm font-medium transition-colors ${
-            side === "sell" ? "bg-danger text-foreground" : "cw-text-muted hover:text-foreground"
+          className={`rounded-lg py-2.5 text-base font-semibold transition-colors ${
+            side === "sell"
+              ? "bg-danger text-foreground"
+              : "bg-panel cw-text-muted hover:text-foreground"
           }`}
         >
           Sell
         </button>
       </div>
 
-      <label className="flex flex-col gap-1">
-        <span className="text-xs cw-text-muted">
-          Amount ({side === "buy" ? "SOL" : symbol})
-        </span>
+      <div className="flex items-center rounded-lg border border-border bg-background px-3 py-2.5">
+        <span className="cw-num text-2xl text-muted">$</span>
         <input
           type="number"
           min="0"
@@ -216,11 +218,28 @@ export function TradePanel({ mint, overview }: { mint: string; overview: TokenOv
           data-testid="trade-amount-input"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="cw-num rounded-md border border-border bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+          placeholder="0"
+          className="cw-num w-full bg-transparent px-1 text-2xl text-foreground outline-none placeholder:text-muted"
         />
-      </label>
+        <span className="cw-num whitespace-nowrap text-xs cw-text-muted">
+          {side === "buy" ? "SOL" : symbol}
+        </span>
+      </div>
 
-      <div data-testid="trade-quote" className="flex flex-col gap-1 rounded-md border border-border p-3 text-xs">
+      <div className="grid grid-cols-4 gap-2">
+        {[10, 100, 500, 1000].map((v) => (
+          <button
+            key={v}
+            type="button"
+            onClick={() => setAmount(String(v))}
+            className="rounded-lg border border-border bg-panel py-1.5 text-xs font-medium text-foreground transition-colors hover:border-accent/60"
+          >
+            ${v}
+          </button>
+        ))}
+      </div>
+
+      <div data-testid="trade-quote" className="flex flex-col gap-1 rounded-lg border border-border p-3 text-xs">
         {!canQuote && <span className="cw-text-muted">Enter an amount to see a quote.</span>}
         {canQuote && quoteLoading && <span className="cw-text-muted">Fetching quote…</span>}
         {canQuote && !quoteLoading && quoteError && <span className="cw-text-down">{quoteError}</span>}
@@ -245,13 +264,13 @@ export function TradePanel({ mint, overview }: { mint: string; overview: TokenOv
       </div>
 
       {!ready ? (
-        <div className="h-10 w-full animate-pulse rounded-md bg-border" />
+        <div className="h-12 w-full animate-pulse rounded-lg bg-border" />
       ) : !authenticated ? (
         <button
           type="button"
           data-testid="trade-signin"
           onClick={() => login()}
-          className="w-full rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-colors hover:opacity-90"
+          className="w-full rounded-lg bg-accent px-4 py-3 text-base font-semibold text-accent-foreground transition-opacity hover:opacity-90"
         >
           Sign in to trade
         </button>
@@ -261,7 +280,7 @@ export function TradePanel({ mint, overview }: { mint: string; overview: TokenOv
           data-testid="trade-action"
           disabled={!quoteRaw || actionState === "pending"}
           onClick={handleAction}
-          className={`w-full rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+          className={`w-full rounded-lg px-4 py-3 text-base font-semibold transition-opacity disabled:cursor-not-allowed disabled:opacity-50 ${
             side === "buy"
               ? "bg-accent text-accent-foreground hover:opacity-90"
               : "bg-danger text-foreground hover:opacity-90"

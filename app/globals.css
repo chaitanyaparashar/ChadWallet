@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark trading aesthetic — this is the only palette the app uses, so we
-     don't bother with a prefers-color-scheme light variant. */
-  --background: #0b0e11;
-  --panel: #14181d;
-  --border: #232830;
-  --foreground: #e8eaed;
-  --muted: #8b929c;
+  /* Dark trading aesthetic, tuned to match fomo.family's near-black canvas.
+     ChadWallet keeps its green accent. Only palette the app uses. */
+  --background: #060510;
+  --background-2: #0a0918;
+  --panel: #12111a;
+  --border: #211f2e;
+  --foreground: #f7f7f7;
+  --muted: #8b8a99;
   --accent: #16c784;
   --accent-foreground: #04140d;
   --danger: #ea3943;
@@ -15,6 +16,7 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-2: var(--background-2);
   --color-panel: var(--panel);
   --color-border: var(--border);
   --color-foreground: var(--foreground);
@@ -123,5 +125,157 @@ body {
   }
   to {
     transform: translateX(0);
+  }
+}
+
+/* === fomo-style landing: typography, buttons, motion === */
+
+/* Big lowercase display headings, à la fomo (Aeonik 500). */
+.cw-display {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  text-transform: lowercase;
+}
+
+/* CTA buttons */
+.cw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  padding: 0.85rem 1.6rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+}
+.cw-btn:hover {
+  transform: translateY(-1px);
+}
+.cw-btn-primary {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  box-shadow: 0 8px 30px -8px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.cw-btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--foreground);
+  backdrop-filter: blur(8px);
+}
+.cw-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Animated starfield: three layered, drifting star fields built from radial
+   gradients — no image asset needed, always in motion. */
+.cw-stars,
+.cw-stars::before,
+.cw-stars::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-repeat: repeat;
+  pointer-events: none;
+}
+.cw-stars {
+  background-image:
+    radial-gradient(1.5px 1.5px at 20px 30px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 140px 80px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 90px 160px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 200px 120px, rgba(150, 220, 255, 0.6), transparent);
+  background-size: 240px 240px;
+  animation: star-drift 90s linear infinite;
+  opacity: 0.6;
+}
+.cw-stars::before {
+  background-image:
+    radial-gradient(1px 1px at 50px 60px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 170px 20px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 110px 140px, rgba(180, 255, 220, 0.5), transparent);
+  background-size: 300px 300px;
+  animation: star-drift 140s linear infinite reverse;
+  opacity: 0.5;
+}
+.cw-stars::after {
+  background-image:
+    radial-gradient(1px 1px at 80px 30px, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 30px 180px, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 420px 420px;
+  animation: star-drift 200s linear infinite;
+  opacity: 0.4;
+}
+
+@keyframes star-drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-240px);
+  }
+}
+
+/* Slow, ambient green glow that pans behind the hero. */
+@keyframes glow-pan {
+  0% {
+    transform: translate3d(-8%, -4%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8%, 4%, 0) scale(1.15);
+  }
+  100% {
+    transform: translate3d(-8%, -4%, 0) scale(1);
+  }
+}
+.cw-glow {
+  animation: glow-pan 18s ease-in-out infinite;
+}
+
+/* Orbit rings: a wrapper spins; avatars counter-spin to stay upright. */
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes orbit-spin-rev {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+.cw-orbit {
+  animation: orbit-spin linear infinite;
+}
+.cw-orbit-rev {
+  animation: orbit-spin-rev linear infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.cw-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cw-stars,
+  .cw-stars::before,
+  .cw-stars::after,
+  .cw-glow,
+  .cw-orbit,
+  .cw-orbit-rev,
+  .cw-float {
+    animation: none;
   }
 }

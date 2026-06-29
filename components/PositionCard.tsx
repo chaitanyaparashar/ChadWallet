@@ -28,16 +28,25 @@ export function PositionCard({ mint, priceUsd }: { mint: string; priceUsd: numbe
 
   if (!authenticated) {
     return (
-      <div data-testid="position-card" className="cw-card flex flex-col gap-2 p-4 text-sm cw-text-muted">
-        <p className="font-medium text-foreground">Your position</p>
-        <p>Connect to see your position</p>
+      <div data-testid="position-card" className="cw-card flex flex-col gap-3 p-4 text-sm">
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-foreground">Your positions</p>
+          <span className="rounded-md bg-panel px-2 py-0.5 text-xs cw-text-muted">Open</span>
+        </div>
+        <p className="cw-text-muted">Connect to see your position</p>
       </div>
     );
   }
 
   return (
     <div data-testid="position-card" className="cw-card flex flex-col gap-3 p-4 text-sm">
-      <p className="font-medium text-foreground">Your position</p>
+      <div className="flex items-center justify-between">
+        <p className="font-semibold text-foreground">Your positions</p>
+        <div className="flex gap-1 rounded-md border border-border p-0.5 text-xs">
+          <span className="rounded bg-accent/15 px-2 py-0.5 font-medium text-accent">Open</span>
+          <span className="px-2 py-0.5 cw-text-muted">Closed</span>
+        </div>
+      </div>
 
       {loading && !position ? (
         <div className="flex flex-col gap-2">

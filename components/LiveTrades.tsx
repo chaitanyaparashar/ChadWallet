@@ -64,10 +64,10 @@ export function LiveTrades({ trades }: { trades: Trade[] }) {
         </tr>
       </thead>
       <tbody>
-        {trades.map((trade) => {
+        {trades.map((trade, index) => {
           const isBuy = trade.side === "buy";
           return (
-            <tr key={trade.txHash}>
+            <tr key={`${trade.txHash}-${index}`}>
               <td className={`cw-num font-medium ${isBuy ? "cw-text-up" : "cw-text-down"}`}>
                 {isBuy ? "BUY" : "SELL"}
               </td>

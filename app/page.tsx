@@ -1,7 +1,9 @@
 "use client";
 
 import { TokenBanner } from "@/components/TokenBanner";
+import { LandingTopBar } from "@/components/LandingTopBar";
 import { Hero } from "@/components/Hero";
+import { OrbitSection } from "@/components/OrbitSection";
 import { FeatureSections } from "@/components/FeatureSections";
 import { Footer } from "@/components/Footer";
 import { DemoDataPill } from "@/components/DemoDataPill";
@@ -9,14 +11,15 @@ import { useTrending } from "@/lib/hooks/useTrending";
 
 export default function Home() {
   const { tokens, degraded } = useTrending();
+  const launchMint = tokens[0]?.mint;
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="relative flex flex-1 flex-col">
+      <LandingTopBar />
+      <Hero launchMint={launchMint} />
       <TokenBanner tokens={tokens} direction="left" />
-      <main className="flex-1">
-        <Hero launchMint={tokens[0]?.mint} />
-        <FeatureSections />
-      </main>
+      <OrbitSection launchMint={launchMint} />
+      <FeatureSections />
       <TokenBanner tokens={tokens} direction="right" />
       <Footer />
       {degraded && <DemoDataPill />}

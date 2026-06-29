@@ -1,17 +1,24 @@
 import Link from "next/link";
 import type { Token } from "@/types";
+import { formatPrice, formatChange } from "@/lib/format";
 
-function formatPrice(priceUsd: number): string {
-  if (priceUsd >= 1) {
-    return `$${priceUsd.toFixed(2)}`;
+function TokenIcon({ token }: { token: Token }) {
+  if (token.logoURI) {
+    // External CDN logos — plain img avoids next/image remote-domain config.
+    // eslint-disable-next-line @next/next/no-img-element
+    return (
+      <img
+        src={token.logoURI}
+        alt=""
+        className="h-8 w-8 flex-none rounded-full bg-border object-cover"
+      />
+    );
   }
-  // Sub-dollar tokens need more precision to be meaningful.
-  return `$${priceUsd.toFixed(6)}`;
-}
-
-function formatChange(change24h: number): string {
-  const sign = change24h >= 0 ? "+" : "";
-  return `${sign}${change24h.toFixed(2)}%`;
+  return (
+    <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-border text-xs font-semibold text-foreground">
+      {token.symbol.slice(0, 1)}
+    </span>
+  );
 }
 
 function TrendingListRow({ token, isActive }: { token: Token; isActive: boolean }) {
@@ -21,41 +28,61 @@ function TrendingListRow({ token, isActive }: { token: Token; isActive: boolean 
       href={`/trade/${token.mint}`}
       data-testid={`row-${token.mint}`}
       data-active={isActive ? "true" : "false"}
-      className={`flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
-        isActive ? "bg-border/60 text-foreground" : "text-muted hover:bg-border/30 hover:text-foreground"
+      className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 transition-colors ${
+        isActive ? "bg-panel" : "hover:bg-panel/60"
       }`}
     >
-      <span className="flex flex-col">
-        <span className="font-medium text-foreground">{token.symbol}</span>
-        <span className="text-xs cw-text-muted">{token.name}</span>
+      <TokenIcon token={token} />
+      <span className="flex min-w-0 flex-1 flex-col">
+        <span className="truncate text-sm font-medium text-foreground">{token.symbol}</span>
+        <span className="cw-num truncate text-xs cw-text-muted">{formatPrice(token.priceUsd)}</span>
       </span>
-      <span className="flex flex-col items-end">
-        <span className="cw-num text-foreground">{formatPrice(token.priceUsd)}</span>
-        <span className={`cw-num text-xs ${isUp ? "cw-text-up" : "cw-text-down"}`}>
-          {formatChange(token.change24h)}
-        </span>
+      <span className={`cw-num text-xs font-medium ${isUp ? "cw-text-up" : "cw-text-down"}`}>
+        {formatChange(token.change24h)}
       </span>
     </Link>
   );
 }
 
+const FILTERS = ["Watchlist", "Crypto", "Trending", "Most held"];
+
 /**
- * Left-column rail listing trending tokens. Each row links to its trade
- * page; the row matching `activeMint` is visually highlighted.
+ * Left-column rail listing trending tokens, fomo-style: section tabs, filter
+ * chips (Trending active), then token rows linking to their trade pages.
  */
 export function TrendingList({ tokens, activeMint }: { tokens: Token[]; activeMint: string }) {
   return (
-    <div data-testid="trending-list" className="cw-card flex flex-col gap-1 p-2">
-      <h2 className="px-3 py-1 text-xs font-medium uppercase tracking-wide cw-text-muted">
-        Trending
-      </h2>
-      {tokens.length === 0 ? (
-        <p className="px-3 py-2 text-sm cw-text-muted">No trending tokens</p>
-      ) : (
-        tokens.map((token) => (
-          <TrendingListRow key={token.mint} token={token} isActive={token.mint === activeMint} />
-        ))
-      )}
+    <div data-testid="trending-list" className="flex min-h-0 flex-col border-r border-border">
+      <div className="flex items-center gap-4 border-b border-border px-3 py-2.5 text-sm">
+        <span className="cw-text-muted">Alerts</span>
+        <span className="font-semibold text-foreground">Tokens</span>
+        <span className="cw-text-muted">Leaderboard</span>
+      </div>
+
+      <div className="flex flex-wrap gap-1.5 px-3 py-2.5">
+        {FILTERS.map((f) => (
+          <span
+            key={f}
+            className={`rounded-full px-2.5 py-1 text-xs ${
+              f === "Trending"
+                ? "bg-accent/15 font-medium text-accent"
+                : "cw-text-muted hover:text-foreground"
+            }`}
+          >
+            {f}
+          </span>
+        ))}
+      </div>
+
+      <div className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-1.5 pb-2">
+        {tokens.length === 0 ? (
+          <p className="px-3 py-2 text-sm cw-text-muted">No trending tokens</p>
+        ) : (
+          tokens.map((token) => (
+            <TrendingListRow key={token.mint} token={token} isActive={token.mint === activeMint} />
+          ))
+        )}
+      </div>
     </div>
   );
 }

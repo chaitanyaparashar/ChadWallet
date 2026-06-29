@@ -39,7 +39,7 @@ export function TradeTabs({ holders, trades }: { holders: Holder[]; trades: Trad
               : "cw-text-muted hover:text-foreground"
           }`}
         >
-          Live Trades
+          Swaps
         </button>
       </div>
 
