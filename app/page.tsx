@@ -3,6 +3,7 @@
 import { TokenBanner } from "@/components/TokenBanner";
 import { LandingTopBar } from "@/components/LandingTopBar";
 import { Hero } from "@/components/Hero";
+import { StatsSection } from "@/components/StatsSection";
 import { OrbitSection } from "@/components/OrbitSection";
 import { FeatureSections } from "@/components/FeatureSections";
 import { Footer } from "@/components/Footer";
@@ -17,7 +18,7 @@ export default function Home() {
     <div className="relative flex flex-1 flex-col">
       <LandingTopBar />
       <Hero launchMint={launchMint} />
-      <TokenBanner tokens={tokens} direction="left" />
+      <StatsSection />
       <OrbitSection launchMint={launchMint} />
       <FeatureSections />
       <TokenBanner tokens={tokens} direction="right" />

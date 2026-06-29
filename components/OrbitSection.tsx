@@ -83,7 +83,7 @@ export function OrbitSection({ launchMint }: { launchMint?: string }) {
   const launchHref = `/trade/${launchMint ?? DEFAULT_MINT}`;
 
   return (
-    <section className="relative isolate flex min-h-[80vh] items-center justify-center overflow-hidden bg-background-2 px-6 py-24">
+    <section className="relative isolate flex min-h-[80vh] items-center justify-center overflow-hidden bg-background-2 px-6 pb-24 pt-44">
       <div
         aria-hidden
         className="cw-glow pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-[140px]"
